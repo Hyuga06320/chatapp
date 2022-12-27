@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .models import Talk, User
-from django.core.exceptions import VakidationError
+from django.core.exceptions import ValidationError
 
 TABOO_WORDS = ["ばか", "バカ", "あほ", "アホ"]
 
