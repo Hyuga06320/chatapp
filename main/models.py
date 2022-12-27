@@ -36,10 +36,10 @@ class Talk(models.Model):
             raise ValueError("未来の時刻です。")
 
         if delta < one_hour:
-            return f"{delta.seconds // 60}分前"
+            return f"{delta.seconds // 60} 分前"
         elif delta < one_day:
-            return f"{delta.seconds // 3600}時間前"
+            return f"{delta.seconds // 3600} 時間前"
         elif delta < one_week:
-            return f"{delta.days}日前"
+            return f"{delta.days} 日前"
         else:
-            return "１週間以上前"
+            return "1 週間以上前"
