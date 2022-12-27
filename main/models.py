@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
+from datetime import timedelta
+from django.utils import timezone
 
 class User(AbstractUser):
     pass
@@ -22,3 +23,23 @@ class Talk(models.Model):
 
     def __str__(self):
         return "{} -> {}".format(self.sender, self.receiver)
+    
+    def get_elapsed_time(self):
+        delta = timezone.now() - self.time
+
+        zero = timedelta()
+        one_hour = timedelta(hours = 1)
+        one_day = timedelta(days = 1)
+        one_week = timedelta(days = 7)
+
+        if delta < zero:
+            raise ValueError("未来の時刻です。")
+
+        if delta < one_hour:
+            return f"{delta.seconds // 60}分前"
+        elif delta < one_day:
+            return f"{delta.seconds // 3600}時間前"
+        elif delta < one_week:
+            return f"{delta.days}日前"
+        else:
+            return "１週間以上前"
