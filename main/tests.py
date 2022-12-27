@@ -29,3 +29,25 @@ class TestTalkModel(TestCase):  # TestCase を継承するのを忘れないよ�
     def test_invalid_elapsed_time(self):
         with self.assertRaises(ValueError):
             self._talk_future.get_elapsed_time()
+
+
+class TestTalkForm(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # フォームはコンストラクタの引数に辞書を渡すことで初期化することができます。
+        cls._good_form = TalkForm({"message": "こんにちは今日もプログラミングを頑張るぞ"})
+        cls._bad_form1 = TalkForm({"message": "君はあほだね"})
+        cls._bad_form2 = TalkForm({"message": "彼はバカというよりかはあほだ"})
+
+    def test_good_talk(self):
+        self.assertTrue(self._good_form.is_valid())
+
+    def test_bad_talk(self):
+        self.assertFalse(self._bad_form1.is_valid())
+        self.assertIn("禁止ワード あほ が含まれています", self._bad_form1.errors["message"])
+
+        self.assertFalse(self._bad_form2.is_valid())
+        self.assertIn(
+            "禁止ワード バカ, あほ が含まれています", self._bad_form2.errors["message"]
+        )

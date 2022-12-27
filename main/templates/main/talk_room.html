@@ -27,7 +27,7 @@
         </li>
         {% endfor %}
     </ul>
-
+    
     {% if form.message.errors %}
     <ul>
         {% for error in form.message.errors %}
@@ -35,13 +35,7 @@
         {% endfor %}
     </ul>
     {% endif %}
-
-    {% if form.message.errors %}
-    <ul>
-        {% for error in form.message.errors %}
-        <li>{{ error }}</li>
-        {% endfor %}
-
+    
     {# チャットの送信フォーム #}
     <form action="{% url 'talk_room' friend.id %}" method="POST" class="message-form">
         {% csrf_token %}
